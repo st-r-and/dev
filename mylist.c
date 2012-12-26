@@ -8,13 +8,25 @@ struct eigenschaft {
   char eigname[MAX];
   char eigwert[MAX];
   struct eigenschaft *next;
-}
+};
 
 struct person {
   char nachname[MAX];
   char vorname[MAX];
   struct eigenschaft eig;
   struct person *next;
+};
+
+struct person *pers = NULL;
+
+void pers_anhaengen(char *n, char *v){
+  struct person *pointer;
+  if(pers == NULL){
+    if((pers = malloc(sizeof(struct person))) == NULL){
+      fprintf(stderr, "Kein Speicherplatz");
+      return;
+    }
+  }
 }
 
 void ausgabe(void){
