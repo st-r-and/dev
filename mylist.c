@@ -2,6 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX 20
+
+struct eigenschaft {
+  char eigname[MAX];
+  char eigwert[MAX];
+  struct eigenschaft *next;
+}
+
+struct person {
+  char nachname[MAX];
+  char vorname[MAX];
+  struct eigenschaft eig;
+  struct person *next;
+}
+
 void ausgabe(void){
   printf("Hallo\n");
 }
