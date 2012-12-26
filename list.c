@@ -147,6 +147,28 @@ void eingabe(void) {
 	    eintag, einmon, einjahr, gehalt);
 }
 
+void sortiert_eingeben(char *n, char *v, int at, int am, int aj,
+		       int et, int em, int ej, long geh) {
+  struct angestellt *zeiger, *zeiger1;
+  if(anfang == NULL)
+    anhaengen(n, v, at, am, aj, et, em, ej, geh);
+  else {
+    zeiger = anfang;
+    while(zeiger != NULL && (strcmp(zeiger->name, n) < 0))
+      zeiger=zeiger->next;
+    if(zeiger=NULL)
+      anhaengen(n, v, at, am, aj, et, em, ej, geh);
+    else if(zeiger == anfang){
+      anfang=malloc(sizeof(struct angestellt));
+      if(NULL == anfang) {
+	fprintf(stderr, "Kein Speicher\n");
+	return;
+    }
+      strcpy(anfang->nama, strtok(n, "\n"));
+      strcpy(anfang->vorname, strtok(v, "\n"));
+  }
+}
+
 int main(void) {
   int wahl;
   char dname[MAX];
