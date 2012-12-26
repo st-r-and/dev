@@ -87,6 +87,26 @@ void loesche(char *wen){
   }
 }
 
+void loesche_alles(void) {
+  struct angestellt *zeiger, *zeiger1;
+
+  if(anfang != NULL) {
+    zeiger = anfang->next;
+    while(zeiger != NULL){
+      zeiger1 = anfang->next->next;
+      anfang->next= zeiger1;
+      free(zeiger);
+      zeiger = zeiger1;
+    }
+    free(anfang->next);
+    free(anfang);
+    anfang = NULL;
+    printf("Liste erfolgreich geloescht!!!\n");
+  } else {
+    fprintf(stderr,"Keine Liste zum Loeschen vorhanden!!\n");
+  }
+}
+
 void ausgabe(void) {
   struct angestellt *zeiger = anfang;
   printf("||=======================================================||\n");
