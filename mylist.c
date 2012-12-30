@@ -19,6 +19,21 @@ struct person {
 
 struct person *pers = NULL;
 
+void eigen_anhaengen(struct person *p, struct eigenschaft *e){
+  struct eigenschaft *pointer;
+
+}
+
+
+void pers_suchen(char *n, char *v){
+
+}
+
+void eigen_an_person(char *n, char *v, char *en, char *ew){
+
+}
+
+
 void pers_anhaengen(char *n, char *v){
   struct person *pointer;
   if(pers == NULL){
@@ -46,8 +61,9 @@ void pers_anhaengen(char *n, char *v){
   }
 }
 
-void ausgabe_eig(char *n, char *v){
-  printf("Hallo\n");
+void ausgabe_eig(struct person *p){
+  if(p != NULL)
+    printf("Eigenschaften vorhanden ");
 }
 
 void ausgabe(void){
@@ -55,7 +71,7 @@ void ausgabe(void){
   while(pointer != NULL) {
     printf("%s - %s ", pointer->nachname, pointer->vorname);
     if(pointer->eig != NULL){
-      ausgabe_eig(pointer->nachname, pointer->vorname);
+      ausgabe_eig(pointer);
     } else {
       printf("keine Eigenschaften");
     }
