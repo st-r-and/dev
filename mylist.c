@@ -47,21 +47,24 @@ void eigen_anhaengen(struct person *p, struct eigenschaft *e){
 
 
 struct person *pers_suchen(char *n, char *v){
-  struct person *pointer;
+  struct person *thpointer;
+  printf("%s %s \n", n, v);
   if(pers != NULL){
-    pointer = pers;
-    while(pointer->next != NULL){
-      if((strcmp(pointer->nachname, n) == 0) && (strcmp(pointer->vorname, v) == 0)){
+    printf("etwas da \n");
+    thpointer = pers;
+    while(thpointer != NULL){
+      printf("-%s- -%s- -%s- -%s-\n", thpointer->nachname, n, thpointer->vorname, v);
+      if((strcmp(thpointer->nachname, n) == 0) && (strcmp(thpointer->vorname, v) == 0)){
 	printf("gefunden \n");
-	return pointer;
+	return thpointer;
       }
-      pointer = pointer->next;
+      thpointer = thpointer->next;
     }
-    pointer = NULL;
+    thpointer = NULL;
   } else {
-    pointer = NULL;
+    thpointer = NULL;
   }
-  return pointer;
+  return thpointer;
 }
 
 void eigen_an_person(char *n, char *v, char *en, char *ew){
@@ -76,6 +79,28 @@ void eigen_an_person(char *n, char *v, char *en, char *ew){
   } else {
     printf("Name nicht gefunden \n");
   }
+}
+
+void eigen_eingabe(void){
+  char n[MAX], v[MAX], en[MAX], ew[MAX];
+  char *pointer;
+  printf("Nachname : ");
+  fgets(n, MAX, stdin);
+  pointer = strrchr(n, '\n');
+  *pointer = '\0';
+  printf("Vorname : ");
+  fgets(v, MAX, stdin);
+  pointer = strrchr(v, '\n');
+  *pointer = '\0';
+  printf("Eigenschaft : ");
+  fgets(en, MAX, stdin);
+  pointer = strrchr(en, '\n');
+  *pointer = '\0';
+  printf("Wert : ");
+  fgets(ew, MAX, stdin);
+  pointer = strrchr(ew, '\n');
+  *pointer = '\0';
+  eigen_an_person(n,v,en,ew);
 }
 
 void pers_anhaengen(char *n, char *v){
@@ -140,33 +165,30 @@ void pers_eingabe(void){
 
 void eigen_menu(void){
   printf ("properties \n");
-  int wahl;
+  int eigwahl;
   do {
     printf("\n1 : print\n");
     printf("2 : Write properties\n");
     printf("Ende: 9\n");
     printf("Auswahl: ");
-    scanf("%d", &wahl);
+    scanf("%d", &eigwahl);
     getchar();
-    switch(wahl){
+    switch(eigwahl){
     case 1 : printf("Nachname : \n");
       printf("Vorname : \n");
       break;
-    case 2 : printf("Nachname : \n");
-      printf("Vorname : \n");
-      printf("Eigenschaft : \n");
-      printf("Wert : \n");
+    case 2 : eigen_eingabe();
       break;
     case 9 :
       break;
     default :
       printf("Falsche Eingabe!!!\n");
     }
-  } while(wahl != 9);
+  } while(eigwahl != 9);
 }
 
 void menu(void){
-  int wahl;
+  int wahl, i;
   do {
     printf("\n1 : Print\n");
     printf("2 : Write person\n");
