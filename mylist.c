@@ -48,12 +48,12 @@ void eigen_anhaengen(struct person *p, struct eigenschaft *e){
 
 struct person *pers_suchen(char *n, char *v){
   struct person *thpointer;
+  if((thpointer = malloc(sizeof(struct person))) == NULL)
+    fprintf(stderr,"Kein Speicherplatz");
   printf("%s %s \n", n, v);
   if(pers != NULL){
-    printf("etwas da \n");
     thpointer = pers;
     while(thpointer != NULL){
-      printf("-%s- -%s- -%s- -%s-\n", thpointer->nachname, n, thpointer->vorname, v);
       if((strcmp(thpointer->nachname, n) == 0) && (strcmp(thpointer->vorname, v) == 0)){
 	printf("gefunden \n");
 	return thpointer;
@@ -81,7 +81,20 @@ void eigen_an_person(char *n, char *v, char *en, char *ew){
   }
 }
 
-void eigen_eingabe(void){
+void ausgabe_eig(struct person *p){
+  if(p->eig != NULL)
+    printf("Eigenschaften vorhanden ");
+  else
+    printf("keine Eigenschaft da ");
+}
+
+void eigen_ausgabe(char *n, char *v){
+  struct person *pointer;
+  pointer = pers_suchen(n, v);
+  ausgabe_eig(pointer);
+}
+
+void eigen_eingabe_abfrage(void){
   char n[MAX], v[MAX], en[MAX], ew[MAX];
   char *pointer;
   printf("Nachname : ");
@@ -101,6 +114,20 @@ void eigen_eingabe(void){
   pointer = strrchr(ew, '\n');
   *pointer = '\0';
   eigen_an_person(n,v,en,ew);
+}
+
+void eigen_ausgabe_abfrage(void){
+  char n[MAX], v[MAX];
+  char *pointer;
+  printf("Nachname : ");
+  fgets(n, MAX, stdin);
+  pointer = strrchr(n, '\n');
+  *pointer = '\0';
+  printf("Vorname : \n");
+  fgets(v, MAX, stdin);
+  pointer = strrchr(v, '\n');
+  *pointer = '\0';
+  eigen_ausgabe(n, v);
 }
 
 void pers_anhaengen(char *n, char *v){
@@ -130,10 +157,6 @@ void pers_anhaengen(char *n, char *v){
   }
 }
 
-void ausgabe_eig(struct person *p){
-  if(p != NULL)
-    printf("Eigenschaften vorhanden ");
-}
 
 void ausgabe(void){
   struct person *pointer = pers;
@@ -174,10 +197,9 @@ void eigen_menu(void){
     scanf("%d", &eigwahl);
     getchar();
     switch(eigwahl){
-    case 1 : printf("Nachname : \n");
-      printf("Vorname : \n");
+    case 1 : eigen_ausgabe_abfrage();
       break;
-    case 2 : eigen_eingabe();
+    case 2 : eigen_eingabe_abfrage();
       break;
     case 9 :
       break;
