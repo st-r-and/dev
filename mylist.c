@@ -69,9 +69,11 @@ struct person *pers_suchen(char *n, char *v){
 
 void eigen_an_person(char *n, char *v, char *en, char *ew){
   struct person *pointer;
+  struct eigenschaft *eig;
   pointer = pers_suchen(n, v);
   if(pointer != NULL){
-    struct eigenschaft *eig;
+    if((eig = malloc(sizeof(struct person))) == NULL)
+      fprintf(stderr,"Kein Speicherplatz");
     strcpy(eig->eigname, en);
     strcpy(eig->eigwert, ew);
     eig->next = NULL;
@@ -82,9 +84,15 @@ void eigen_an_person(char *n, char *v, char *en, char *ew){
 }
 
 void ausgabe_eig(struct person *p){
-  if(p->eig != NULL)
-    printf("Eigenschaften vorhanden ");
-  else
+  struct eigenschaft *pointer;
+  if(p->eig != NULL){
+    pointer = p->eig;
+    printf(": %s - %s", pointer->eigname, pointer->eigwert);
+    while(pointer->next != NULL){
+      pointer = pointer->next;
+      printf(", %s - %s ", pointer->eigname, pointer->eigwert);
+    }
+  } else
     printf("keine Eigenschaft da ");
 }
 
@@ -123,7 +131,7 @@ void eigen_ausgabe_abfrage(void){
   fgets(n, MAX, stdin);
   pointer = strrchr(n, '\n');
   *pointer = '\0';
-  printf("Vorname : \n");
+  printf("Vorname : ");
   fgets(v, MAX, stdin);
   pointer = strrchr(v, '\n');
   *pointer = '\0';
